@@ -98,9 +98,6 @@ const obj = {
 
 const fileProds = new File("productos.txt");
 
-// Traigo todos los objetos, traigo solo el del id 2, traigo el del id 4, agrego un objeto, traigo el del id 4 de nuevo, 
-// borro el del id 2 y lo traigo, borro todos y traigo todo
-
 function pruebas(fileExample) {
   // Traigo el array con todos los objetos y luego solo el objeto con el ID 2.
   console.log(fileExample.GetAll())
@@ -122,5 +119,5 @@ function pruebas(fileExample) {
 
 const fakeFile = new File("fake.txt");
 
-pruebas(fileProds)
-// pruebas(fakeFile)
+pruebas(fileProds) 
+// pruebas(fakeFile) //Pruebas con un archivo que no existe
