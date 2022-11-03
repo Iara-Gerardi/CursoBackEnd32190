@@ -122,4 +122,4 @@ const fakeFile = new File("fake.txt");
 // pruebas(fileProds) 
 // pruebas(fakeFile) //Pruebas con un archivo que no existe
 
-module.exports.fileProds = fileProds;
+module.exports.fileClass = File;
