@@ -6,35 +6,30 @@ class File {
   }
 
   save(obj) {
+    let newID = 1
     try {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       const parsedFile = JSON.parse(readFile)
-      let newID = 1
 
-      if (parsedFile.length <= 1) {
-        newID = 1
-      } else {
-        newID = parsedFile[parsedFile.length - 1].id + 1
-      }
+      if (parsedFile.length > 1) newID = parsedFile[parsedFile.length - 1].id + 1
 
       obj = {
-        ...obj,
-        id: newID
+        id: newID,
+        ...obj
       }
 
       const newVersion = [
-        parsedFile,
+        ...parsedFile,
         obj
       ]
 
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
       return newID;
     } catch (err) {
-      const newID = 1;
 
       obj = {
-        ...obj,
-        id: newID
+        id: newID,
+        ...obj
       }
 
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(obj))
@@ -54,7 +49,7 @@ class File {
       return searchedObj;
 
     } catch (err) {
-      return { "error": err }
+      return { error: err }
     }
   }
 
@@ -76,7 +71,7 @@ class File {
 
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
     } catch (err) {
-      return { "error": err }
+      return { error: err }
     }
   }
 
@@ -86,6 +81,18 @@ class File {
       fs.writeFileSync(`${this.fileName}`, "[]")
     } catch (err) {
       return "No existe un archivo con el nombre buscado"
+    }
+  }
+
+  EditByID(obj) {
+    try {
+      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
+      const parsedFile = JSON.parse(readFile)
+      if (parsedFile.length < obj.id) throw new Error('no existen objectos con el ID ingresado')
+      const newVersion = parsedFile.map(el => el.id === obj.id ? obj : el);
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+    } catch (err) {
+      return { error: err }
     }
   }
 
