@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "shampoo",
+    "price": 280,
+    "thumbnail": "archivo"
+  },
+  {
+    "id": 3,
+    "title": "libro",
+    "price": 1200,
+    "thumbnail": "archivo"
+  }
+]

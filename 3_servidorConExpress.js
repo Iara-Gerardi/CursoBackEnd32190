@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 8080
-const { fileClass } = require('./ManejoDeArchivos/ManejoDeArchivos')
+const { fileClass } = require('./2_ManejoDeArchivos/ManejoDeArchivos')
 
 let randomProduct = null
 const fileProds = new fileClass(`${__dirname}\\ManejoDeArchivos\\productos.txt`);

@@ -43,18 +43,18 @@ class File {
   }
 
   GetByID(ID) {
+    if (typeof ID != "number") { throw new Error("Ingrese un numero") }
+
     try {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       const parsedFile = JSON.parse(readFile)
       const searchedObj = parsedFile.filter((elem) => { return elem.id === ID });
 
-      if (searchedObj.length < 1) {
-        return null;
-      } else {
-        return searchedObj;
-      }
+      if (searchedObj.length < 1) { return null; }
+      return searchedObj;
+
     } catch (err) {
-      return "No existe un archivo con el nombre buscado"
+      return { "error": err }
     }
   }
 
@@ -62,12 +62,13 @@ class File {
     try {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       return JSON.parse(readFile)
-    } catch(err){
+    } catch (err) {
       return "No existe un archivo con el nombre buscado"
     }
   }
 
   DeleteByID(ID) {
+    if (typeof ID != "number") { throw new Error("Ingrese un numero") }
     try {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       const parsedFile = JSON.parse(readFile)
@@ -75,7 +76,7 @@ class File {
 
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
     } catch (err) {
-      return "No existe un archivo con el nombre buscado"
+      return { "error": err }
     }
   }
 
