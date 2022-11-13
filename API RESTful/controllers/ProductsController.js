@@ -15,7 +15,6 @@ const getProducts = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ error: err })
     }
-
 }
 
 // Metodo probado
@@ -23,7 +22,7 @@ const getProductByID = async (req, res) => {
     const id = parseInt(req.params.id);
     try {
         const product = fileProds.GetByID(id);
-        console.log(product)
+        // console.log(product)
         if (product === null) return res.status(400).json({ message: 'error producto no encontrado' })
         return res.json({ message: 'success', data: product })
     } catch (err) {
@@ -32,12 +31,15 @@ const getProductByID = async (req, res) => {
 }
 
 const addProduct = async (req, res) => {
-    const { title, price, thumbnail } = req.body
+    const { title, price } = req.body
+    const thumbnail = req.file
+    const filename = thumbnail.filename
     console.log(req.body)
     if (!title || !price || !thumbnail) return res.status(400).json({ error: "all fields required" });
     try {
-        const newProd = { title, price, thumbnail };
+        const newProd = { title, price, thumbnail: filename };
         const product = fileProds.save(newProd);
+        console.log(product)
         return res.json({ message: 'success', data: product });
     } catch (err) {
         return res.status(500).json({ error: err });
@@ -61,7 +63,7 @@ const deleteProduct = async (req, res) => {
     const id = parseInt(req.params.id);
     try {
         const product = fileProds.DeleteByID(id);
-        console.log(product)
+        // console.log(product)
         if (product === null) return res.status(400).json({ message: 'error producto no encontrado' })
         return res.json({ message: 'success', data: { productID: product } })
     } catch (err) {
