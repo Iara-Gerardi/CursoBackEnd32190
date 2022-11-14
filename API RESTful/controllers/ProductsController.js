@@ -7,7 +7,6 @@ const jsonPath = path.join(__dirname, '../' + '/data/data.json');
 const { fileClass } = require(classPath)
 const fileProds = new fileClass(jsonPath);
 
-// Metodo probado
 const getProducts = async (req, res) => {
     try {
         const allProducts = fileProds.GetAll();
@@ -17,12 +16,10 @@ const getProducts = async (req, res) => {
     }
 }
 
-// Metodo probado
 const getProductByID = async (req, res) => {
     const id = parseInt(req.params.id);
     try {
         const product = fileProds.GetByID(id);
-        // console.log(product)
         if (product === null) return res.status(400).json({ message: 'error producto no encontrado' })
         return res.json({ message: 'success', data: product })
     } catch (err) {
@@ -34,7 +31,6 @@ const addProduct = async (req, res) => {
     const { title, price } = req.body
     const thumbnail = req.file
     const filename = thumbnail.filename
-    console.log(req.body)
     if (!title || !price || !thumbnail) return res.status(400).json({ error: "all fields required" });
     try {
         const newProd = { title, price, thumbnail: filename };
@@ -47,18 +43,19 @@ const addProduct = async (req, res) => {
 }
 
 const editProduct = async (req, res) => {
-    const { id, title, price, thumbnail } = req.body
+    const { id } = req.params
+    const { title, price } = req.body
+
     try {
-        if (!id || !title || !price || !thumbnail) return res.status(400).json({ error: "all fields required" });
-        const editedObject = { id, title, price, thumbnail };
+        if (!id || !title || !price) return res.status(400).json({ error: "all fields required" });
+        const editedObject = { id, title, price };
         const product = fileProds.EditByID(editedObject);
-        return res.json({ message: 'success', data: product });
+        return res.json({ data: product });
     } catch (err) {
-        return res.status(500).json({ error: err })
+        return res.status(500).json({ error: err });
     }
 }
 
-// Metodo probado
 const deleteProduct = async (req, res) => {
     const id = parseInt(req.params.id);
     try {

@@ -15,9 +15,9 @@ const upload = multer({ storage }).single("thumbnail");
 const handleImages = (req, res, next) => {
   upload(req, res, (err) => {
     if (err) return res.status(500).json({ message: "Image couldn't be uploaded" });
-    next();
+    req.thumbnail = req.file.filename;
   });
-  console.log("multer:" + storage.filename)
+  next();
 }
 
 module.exports = handleImages;

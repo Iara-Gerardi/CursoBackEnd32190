@@ -88,9 +88,18 @@ class File {
     try {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       const parsedFile = JSON.parse(readFile)
-      if (parsedFile.length < obj.id) throw new Error('no existen objectos con el ID ingresado')
-      const newVersion = parsedFile.map(el => el.id === obj.id ? obj : el);
+
+      const index = parsedFile.findIndex(el => { return el.id == obj.id })
+      if (index == -1) throw new Error('no existen objectos con el ID ingresado')
+      const editedObject = {
+        ...parsedFile[index],
+        title: obj.title,
+        price: obj.price,
+      }
+      const newVersion = parsedFile.map(el => el.id == obj.id ? editedObject : el);
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+
+      return { newData: editedObject }
     } catch (err) {
       return { error: err }
     }
