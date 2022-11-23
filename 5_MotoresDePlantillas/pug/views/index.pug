@@ -6,4 +6,7 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title=pageTitle
   body
-    include partials/template.pug
+  if view === "form"
+    include partials/form.pug
+  else
+    include partials/products.pug

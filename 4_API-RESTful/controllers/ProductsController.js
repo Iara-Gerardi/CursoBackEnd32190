@@ -43,13 +43,13 @@ const getImage = (req, res) => {
 
 const addProduct = async (req, res) => {
     const { title, price } = req.body
-    console.log(req.body)
+    console.log(req.thumbnail, req.file)
     const thumbnail = req.file;
     const thumbPath = `localhost:8080/api/products/img/${thumbnail}`;
     console.log(thumbPath)
     if (!title || !price || !thumbnail) return res.status(400).json({ error: "all fields required" });
-    try {
-        const newProd = { title, price, thumbnail, };
+    try { 
+        const newProd = { title, price, thumbnail };
         const product = fileProds.save(newProd);
         console.log(product)
         return res.json({ message: 'success', data: product });

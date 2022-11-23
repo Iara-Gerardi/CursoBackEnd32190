@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const pug = require('pug');
 const app = express();
+const PORT = process.env.PORT || 8081;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -11,15 +12,28 @@ app.set("views", __dirname + "/views");
 
 const products = require('../../4_API-RESTful/data/data.json')
 
-app.get("/products", async (req, res) => {
+app.get("/addProduct", async (req, res) => {
   try {
     res.render("index", {
-      products: products, pageTitle: "Desafio 05 - Pug"
+      products: products, 
+      view: "form",
+      pageTitle: "Pug"
     });
   } catch (error) {
     console.log(error);
   }
 });
 
-let PORT = 8080;
+app.get("/products", async (req, res) => {
+  try {
+    res.render("index", {
+      products: products, 
+      view: "products",
+      pageTitle: "Pug"
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 const server = app.listen(PORT, () => console.log("Escuchando en " + PORT));

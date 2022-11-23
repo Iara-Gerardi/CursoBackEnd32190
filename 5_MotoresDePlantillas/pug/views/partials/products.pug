@@ -1,18 +1,5 @@
 div
-    div    
-        h1 Add product
-        form(action="/products", method="post")
-            div
-            label(for="title") Titulo
-            input(type="text", name="title")
-            div
-            label(for="price") Price
-            input(type="text", name="price")
-            div
-            label(for="thumbnail") Thumbnail
-            input(type="text", name="thumbnail")
-            button Send
-        h2 Historial
+    h2 Productos
         if products.length != 0
             div
                 table
@@ -27,5 +14,4 @@ div
                             td
                                 img(src=val.thumbnailPath, alt=val.title)
         else
-            h3 No products
-
+            h3 No se encontraron productos

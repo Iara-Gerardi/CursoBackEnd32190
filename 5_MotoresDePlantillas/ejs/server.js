@@ -2,6 +2,8 @@ const { notStrictEqual } = require("assert");
 const express = require("express");
 const fs = require("fs");
 
+const PORT = process.env.PORT || 8081;
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,5 +36,4 @@ app.get("/addProduct", async (req, res) => {
   }
 });
 
-let PORT = 8081;
-const server = app.listen(PORT, () => console.log("Escuchando en " + PORT));
+const server = app.listen(PORT);
