@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const path = require('path')
 const app = express();
 
 const productsRouter = require('./routes/ProductsRouter');
@@ -11,6 +12,8 @@ app.use(express.json());
 
 app.use('/api/products', productsRouter);
 app.use('/views', ViewsRouter)
+
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.listen(PORT,()=>{
 })

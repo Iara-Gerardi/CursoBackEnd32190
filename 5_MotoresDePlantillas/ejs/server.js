@@ -15,6 +15,18 @@ app.get("/products", async (req, res) => {
     res.render("index", {
       pageTitle: "Desafio 05 - Ejs",
       products: products,
+      view: "products",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/addProduct", async (req, res) => {
+  try {
+    res.render("index", {
+      pageTitle: "Desafio 05 - Ejs",
+      products: products,
       view: "form",
     });
   } catch (error) {
@@ -22,5 +34,5 @@ app.get("/products", async (req, res) => {
   }
 });
 
-let PORT = 8080;
+let PORT = 8081;
 const server = app.listen(PORT, () => console.log("Escuchando en " + PORT));
