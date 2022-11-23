@@ -1,0 +1,30 @@
+<h2>Productos</h2>
+
+<% if (products.length !=0) { %>
+  <div>
+    <table>
+      <tr>
+        <th>Titulo</th>
+        <th>Precio</th>
+        <th>Foto</th>
+      </tr>
+      <% products.forEach( product=> { %>
+        <tr>
+          <td>
+            <%=product.title %>
+          </td>
+          <td>
+            <%=product.price %>
+          </td>
+          <td>
+            <img src=<%=product.thumbnail %>
+            alt=<%=product.title %>
+              />
+          </td>
+        </tr>
+        <% }) %>
+    </table>
+  </div>
+  <% } else { %>
+    <h3>No products</h3>
+    <% } %>

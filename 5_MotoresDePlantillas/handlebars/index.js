@@ -1,9 +1,33 @@
 const express = require('express')
-const hbs = require('hbs')
 const app = express()
+const products = require('../../4_API-RESTful/data/data.json')
+const fs = require("fs");
+const handlebars = require("express-handlebars");
+const { ppid } = require("process");
 
-app.set('view engine', 'hbs')
+app.engine(
+  "handlebars",
+  handlebars.engine({
+    layoutsDir: __dirname + "/views/layouts/",
+    partialsDir: __dirname + "/views/partials/",
+  })
+);
 
-// app.use(express.static('public'))
+app.set("view engine", "handlebars");
+app.set("views", __dirname + "/views");
 
-app.listen(8080)
+app.get("/products", async (req, res) => {
+  try {
+    res.render("desafio05", {
+      layout: "index",
+      pageTitle: "Handlebars",
+      products: products,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.listen(8080,()=>{
+  console.log(products)
+})

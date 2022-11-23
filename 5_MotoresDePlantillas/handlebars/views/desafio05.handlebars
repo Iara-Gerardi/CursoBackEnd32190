@@ -1,0 +1,56 @@
+<div>
+    <div>
+        <h1>Nuevo Producto</h1>
+        <br>
+
+        <form action="/productos" method="post">
+
+            <div class="form-group">
+                <label for="title"><b>Titulo</b></label>
+                <input id="title" placeholder="Ingrese un titulo" type="text" name="title">
+            </div>
+
+            <div class="form-group">
+                <label for="price"><b>Precio</b></label>
+                <input id="price" placeholder="Ingrese un precio" type="text" name="price">
+            </div>
+
+            <div class="form-group">
+                <label for="thumbnail"><b>Foto</b></label>
+                <input id="thumbnail" type="file" name="thumbnail">
+            </div>
+
+            <button>Enviar</button>
+        </form>
+
+        <h2>Productos</h2>
+
+        {{#if products.length}}
+        <div>
+            <table>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Precio</th>
+                    <th>Foto</th>
+                </tr>
+
+                {{#each products}}
+                <tr>
+                    <td>
+                        {{this.title}}
+                    </td>
+                    <td>
+                        {{this.price}}
+                    </td>
+                    <td>
+                        <img src="localhost:8000/{{this.thumbnail}}" alt="{{this.title}}">
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+        {{else}}
+        <h3>No products</h3>
+        {{/if}}
+    </div>
+</div>
