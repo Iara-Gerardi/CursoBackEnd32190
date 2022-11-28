@@ -1,17 +1,17 @@
-div
-    h2 Productos
-        if products.length != 0
+div(class="flex flex-col absolute top-0 justify-items-center items-center w-full h-full bg-red-50 gap-12")
+    h2(class="text-rose-700 font-extrabold text-4xl p-6") Productos
+        if products.length
             div
                 table
-                    tr
+                    tr(class="grid grid-cols-3 gap-x-12 gap-y-12")
                         th Titulo
                         th Precio
                         th Foto
                     each val in products
-                        tr
+                        tr(class="mt-4 grid grid-cols-3 gap-x-12 gap-y-12 bg-red-100 p-3 justify-items-center items-center")
                             td= val.title
                             td= val.price
                             td
-                                img(src=val.thumbnailPath, alt=val.title)
+                                img(class="w-12 h-12" src=val.thumbnailPath, alt=val.title)
         else
             h3 No se encontraron productos

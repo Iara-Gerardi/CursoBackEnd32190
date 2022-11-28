@@ -3,7 +3,6 @@ const app = express()
 const products = require('../../4_API-RESTful/data/data.json')
 const fs = require("fs");
 const handlebars = require("express-handlebars");
-const { ppid } = require("process");
 const PORT = process.env.PORT || 8081;
 
 app.engine(
@@ -25,6 +24,7 @@ app.get("/products", async (req, res) => {
       products: products,
     });
   } catch (error) {
+    console.log(products)
     console.log(error);
   }
 });

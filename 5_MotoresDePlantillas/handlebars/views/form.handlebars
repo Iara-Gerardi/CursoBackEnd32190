@@ -1,24 +1,23 @@
-<div>
-    <h1>Nuevo Producto</h1>
-    <br>
+<div class="flex flex-col absolute top-0 justify-items-center items-center w-full h-full bg-red-50 gap-12">
+    <h1 class="text-rose-700 font-extrabold text-4xl">Nuevo Producto</h1>
 
-    <form action="/productos" method="post">
+    <form action="/productos" method="post" class="flex flex-col gap-2 justify-items-center">
 
-        <div>
-            <label for="title"><b>Titulo</b></label>
-            <input id="title" placeholder="Ingrese un titulo" type="text" name="title">
+        <div class="flex flex-col gap-2">
+            <label class="text-amber-600 font-bold" for="title"><b>Titulo</b></label>
+            <input id="title" placeholder="Ingrese un titulo" type="text" name="title" class="rounded-md border-none">
         </div>
 
-        <div>
-            <label for="price"><b>Precio</b></label>
-            <input id="price" placeholder="Ingrese un precio" type="text" name="price">
+        <div class="flex flex-col gap-2">
+            <label class="text-amber-600 font-bold" for="price"><b>Precio</b></label>
+            <input id="price" placeholder="Ingrese un precio" type="text" name="price" class="rounded-md border-none">
         </div>
 
-        <div>
-            <label for="thumbnail"><b>Foto</b></label>
-            <input id="thumbnail" type="file" name="thumbnail">
+        <div class="flex flex-col gap-2">
+            <label class="text-amber-600 font-bold" for="thumbnail"><b>Foto</b></label>
+            <input id="thumbnail" type="file" name="thumbnail" class="border-none">
         </div>
 
-        <button>Enviar</button>
+        <button class="rounded-md bg-rose-700 w-16 text-slate-50">Enviar</button>
     </form>
 </div>
