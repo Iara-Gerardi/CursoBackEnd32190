@@ -2,6 +2,7 @@ const express = require('express');
 const { Server: HttpServer } = require('http');
 const { Server: IOServer } = require('socket.io');
 
+// Coloque el 8081 como puerto para poder utilizar la ruta de imagenes del ejercicio 4
 const PORT = 8081;
 const app = express();
 const fs = require("fs");
