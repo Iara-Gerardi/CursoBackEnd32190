@@ -1,1 +1,26 @@
-[{"id":1,"email":"iara","text":"email","date":1669667083065},{"id":1,"email":"a","text":"aa","date":1669667098041},{"id":2,"email":"iaragerardi@gmail.com","text":"holaaa","date":1669667500307}]
+[
+  {
+    "id": 1,
+    "email": "usuario@gmail.com",
+    "text": "Hola!",
+    "date": 1669667083065
+  },
+  {
+    "id": 2,
+    "email": "iara@gmail.com",
+    "text": "Buenos dias",
+    "date": 1669667500307
+  },
+  {
+    "id": 3,
+    "email": "carlosperez@hotmail.com",
+    "text": "¿Como estan?",
+    "date": 1669687597359
+  },
+  {
+    "id": 4,
+    "email": "iara@gmail.com",
+    "text": "mensaje de prueba",
+    "date": 1669687795157
+  }
+]

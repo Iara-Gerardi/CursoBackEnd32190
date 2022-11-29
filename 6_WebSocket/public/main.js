@@ -1,6 +1,22 @@
 const socket = io()
 
-function addProduct(data) {
+const handleTime = (savedTime, savedDate) => {
+
+  const actualTime = Date.now();
+  const secondDiff = Math.floor(Math.abs(actualTime - savedTime) / 1000);
+
+  if (secondDiff > 60 * 60 * 60) return `${savedDate}`
+
+  if (secondDiff < 60) {
+    return `${secondDiff}s`
+  } else if (secondDiff < 60 * 60) {
+    return `${Math.floor(secondDiff / 60)}m`
+  } else {
+    return `${Math.floor(secondDiff / (60 * 60))}h`
+  }
+}
+
+function addProduct() {
   const product = {
     title: document.getElementById('title').value,
     price: document.getElementById('price').value,
@@ -12,12 +28,14 @@ function addProduct(data) {
 }
 
 socket.on('products', (data) => {
-  console.log(data)
-  const table = `<tr class="grid grid-cols-3 gap-x-12 gap-y-8">
-  <th>Titulo</th>
-  <th>Precio</th>
-  <th>Foto</th>
-</tr>`
+
+  const table = `
+  <tr class="grid grid-cols-3 gap-x-12 gap-y-8">
+    <th>Titulo</th>
+    <th>Precio</th>
+    <th>Foto</th>
+  </tr>`
+
   const productList = data.map(product => {
     return `
     <tr class="mt-4 grid grid-cols-3 gap-x-12 gap-y-12 bg-red-100 p-3 justify-items-center items-center">
@@ -26,9 +44,9 @@ socket.on('products', (data) => {
       <td> <img class="w-12 h-12" src="${product.thumbnail}" alt="${product.title}"> </td>
     </tr>`
   })
-    .join(' ')
-console.log(productList)
-  document.getElementById('products').innerHTML = table + productList
+    .join(' ');
+
+  document.getElementById('products').innerHTML = table + productList;
 })
 
 function addMessage(data) {
@@ -45,15 +63,21 @@ function addMessage(data) {
 
 socket.on('messages', (data) => {
   const messagesList = data.map(msj => {
-    return `<div>
-    <div class="flex items-center">
-      <strong class="pr-2 text-lg">${msj.email}</strong>
-      <p class="font-extralight text-sm">${msj.date}</p>
-    </div>
-    <em>${msj.text}</em>
+
+    const savedTime = new Date(msj.date)
+    const savedDate = `${savedTime.getDate()}/${savedTime.getMonth()}`
+    const dinamicTime = handleTime(savedTime, savedDate);
+
+    return `
+    <div>
+      <div class="flex items-center">
+        <strong class="pr-2 text-lg">${msj.email}</strong>
+        <p class="font-extralight text-sm">${dinamicTime}</p>
+      </div>
+      <em>${msj.text}</em>
     </div>`
   })
-    .join(' ')
+    .join(' ');
 
-  document.getElementById('messages').innerHTML = messagesList
+  document.getElementById('messages').innerHTML = messagesList;
 })
