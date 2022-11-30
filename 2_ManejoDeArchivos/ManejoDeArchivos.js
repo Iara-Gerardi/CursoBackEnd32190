@@ -11,7 +11,7 @@ class File {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       const parsedFile = JSON.parse(readFile)
 
-      if (parsedFile.length > 1) newID = parsedFile[parsedFile.length - 1].id + 1
+      if (parsedFile.length >= 1) newID = parsedFile[parsedFile.length - 1].id + 1
 
       obj = {
         id: newID,
