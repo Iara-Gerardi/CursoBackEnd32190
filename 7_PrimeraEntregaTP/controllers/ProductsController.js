@@ -4,7 +4,7 @@ const express = require('express');
 
 const admin = true;
 
-const jsonPath = path.join(__dirname, '../' + '/data/data.json');
+const jsonPath = path.join(__dirname, '../' + '/data/products.json');
 
 const { fileClass } = require('../../2_ManejoDeArchivos/ManejoDeArchivos');
 const fileProds = new fileClass(jsonPath);
