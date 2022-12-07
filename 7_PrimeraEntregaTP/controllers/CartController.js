@@ -42,10 +42,28 @@ const deleteCart = async (req, res) => {
 }
 
 const addToCart = async (req, res) => {
+  const { id } = req.params;
+  const { nombre, descripcion, codigo, foto, precio, stock } = req.body
+  try {
+    const cart = fileCart.AddTo(id, { id, timestamp: Date.now(), nombre, descripcion, codigo, foto, precio, stock });
+    if (cart === null) return res.status(400).json({ message: 'error producto no encontrado' })
+    return res.json({ message: 'success', data: { cart: cart } })
+  } catch (err) {
+    return res.status(500).json({ error: err })
+  }
 
 }
 
 const deleteFromCart = async (req, res) => {
+  const { id, id_prod } = req.params;
+
+  try {
+    const cart = fileCart.DeleteFrom(id, id_prod);
+    if (cart === null) return res.status(400).json({ message: 'error producto no encontrado' })
+    return res.json({ message: 'success', data: { cart: cart } })
+  } catch (err) {
+    return res.status(500).json({ error: err })
+  }
 
 }
 
