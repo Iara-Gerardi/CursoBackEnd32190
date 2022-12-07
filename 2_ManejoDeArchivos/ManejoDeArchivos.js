@@ -124,7 +124,10 @@ class File {
 
       searchedObj.products.push(obj)
 
+      const newVersion = parsedFile.map(el => el.id == ID ? searchedObj : el);
+      
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+      return editedObj;
     } catch (err) {
       return { error: err }
     }
@@ -147,6 +150,7 @@ class File {
       const newVersion = parsedFile.map(el => el.id == ObjId ? editedObj : el);
       
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+      return editedObj;
     } catch (err) {
       return { error: err }
     }
