@@ -4,49 +4,7 @@
     "timestamp": 1670449782735,
     "products": [
       {
-        "id": 2,
-        "timestamp": 1670449563830,
-        "nombre": "nombre",
-        "descripcion": "descripcion",
-        "codigo": "codigo",
-        "foto": "foto",
-        "precio": "precio",
-        "stock": "stock"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "timestamp": 1670450041067,
-    "products": [
-      {
         "id": 1,
-        "timestamp": 1670449563830,
-        "nombre": "nombre",
-        "descripcion": "descripcion",
-        "codigo": "codigo",
-        "foto": "foto",
-        "precio": "precio",
-        "stock": "stock"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "timestamp": 1670450041688,
-    "products": [
-      {
-        "id": 1,
-        "timestamp": 1670449563830,
-        "nombre": "nombre",
-        "descripcion": "descripcion",
-        "codigo": "codigo",
-        "foto": "foto",
-        "precio": "precio",
-        "stock": "stock"
-      },
-      {
-        "id": 3,
         "timestamp": 1670449563830,
         "nombre": "nombre",
         "descripcion": "descripcion",

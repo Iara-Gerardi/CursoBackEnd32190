@@ -35,9 +35,8 @@ const getCart = async (req, res) => {
 const deleteCart = async (req, res) => {
   const id = parseInt(req.params.id);
   try {
-    const cart = fileCart.DeleteByID(id);
-    if (!cart.state) return res.status(400).json({ message: 'error, producto no encontrado' })
-
+    const cart = fileCart.DeleteByID(id); 
+    if (!cart.success) return res.status(400).json({ message: 'error, producto no encontrado' })
     return res.json({ message: 'success', data: { cartID: cart } })
   } catch (err) {
     return res.status(500).json({ error: err })

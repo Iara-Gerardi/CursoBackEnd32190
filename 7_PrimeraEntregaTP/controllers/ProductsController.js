@@ -37,12 +37,13 @@ const editProduct = async (req, res) => {
   const { timestamp, nombre, descripcion, codigo, foto, precio, stock } = req.body
 
   try {
-    if (!id || !timestamp || !nombre || !descripcion || !codigo || !foto || !precio || !stock) return res.status(400).json({ error: "all fields required" });
-    const editedObject = { id, title, price };
+    if (!id || !nombre || !descripcion || !codigo || !foto || !precio || !stock) return res.status(400).json({ error: "all fields required" });
+    const editedObject = { id, timestamp: Date.now(), nombre, descripcion, codigo, foto, precio, stock }
     const product = fileProds.EditByID(editedObject);
+    if (product.error) throw new Error ('No existen productos con el ID ingresado')
     return res.json({ data: product });
   } catch (err) {
-    return res.status(500).json({ error: err });
+    return res.status(500).json({error: err});
   }
 }
 

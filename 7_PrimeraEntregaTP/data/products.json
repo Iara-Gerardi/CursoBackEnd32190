@@ -8,5 +8,15 @@
     "foto": "foto",
     "precio": "precio",
     "stock": "stock"
+  },
+  {
+    "id": 3,
+    "timestamp": 1670449561557,
+    "nombre": "nombre",
+    "descripcion": "descripcion",
+    "codigo": "codigo",
+    "foto": "foto",
+    "precio": "precio",
+    "stock": "stock"
   }
 ]
