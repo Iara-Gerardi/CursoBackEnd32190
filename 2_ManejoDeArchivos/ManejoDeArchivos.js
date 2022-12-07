@@ -43,6 +43,7 @@ class File {
     try {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       const parsedFile = JSON.parse(readFile)
+      if (readFile === []) return null
       const searchedObj = parsedFile.filter((elem) => { return elem.id === ID });
 
       if (searchedObj.length < 1) { return null; }
@@ -68,8 +69,9 @@ class File {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       const parsedFile = JSON.parse(readFile)
       const newVersion = parsedFile.filter((elem) => { return elem.id !== ID });
-
+      if (parsedFile.length === newVersion.length) return { success: false, message: "No existe un elemento con ese ID" }
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+      return { success: true, deletedCart: ID }
     } catch (err) {
       return { error: err }
     }
@@ -105,7 +107,7 @@ class File {
     }
   }
 
-  // Nested methods (add to, delete from)
+  // Nested methods
 
   AddTo(ID, obj) {
     try {
@@ -125,7 +127,7 @@ class File {
       searchedObj.products.push(obj)
 
       const newVersion = parsedFile.map(el => el.id == ID ? searchedObj : el);
-      
+
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
       return editedObj;
     } catch (err) {
@@ -133,14 +135,14 @@ class File {
     }
   }
 
-  DeleteFrom(ID, ObjId){
+  DeleteFrom(ID, ObjId) {
 
     try {
       const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
       const parsedFile = JSON.parse(readFile)
       const searchedObj = parsedFile.filter((elem) => { return elem.id === ID });
 
-      const newArr = searchedObj.products.filter((elem) => { return elem.id !== ObjId });
+      const newArr = searchedObj?.products?.filter((elem) => { return elem.id !== ObjId });
 
       const editedObj = {
         ...searchedObj,
@@ -148,11 +150,11 @@ class File {
       }
 
       const newVersion = parsedFile.map(el => el.id == ObjId ? editedObj : el);
-      
+
       fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
-      return editedObj;
+      return { success: true };
     } catch (err) {
-      return { error: err }
+      return err
     }
   }
 

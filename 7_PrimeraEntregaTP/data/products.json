@@ -1,10 +1,1 @@
-[{
-  "id": "",
-  "timestamp": "",
-  "nombre": "",
-  "descripcion":"",
-  "codigo": "",
-  "foto": "url",
-  "precio":"",
-  "stock":""
-}]
+[{"id":"","timestamp":"","nombre":"","descripcion":"","codigo":"","foto":"url","precio":"","stock":""},{"id":"1","timestamp":1670449563830,"nombre":"a","descripcion":"a","codigo":"a","foto":"a","precio":"a","stock":"a"}]

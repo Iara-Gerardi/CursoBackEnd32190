@@ -12,6 +12,7 @@ const fileProds = new fileClass(jsonPath);
 const getProduct = async (req, res) => {
   try {
     const allProducts = fileProds.GetAll();
+    if (allProducts.length < 1) return res.status(400).json({ message: 'error producto no encontrado' })
     return res.json({ message: 'success', data: allProducts });
   } catch (err) {
     return res.status(500).json({ error: err })
@@ -22,10 +23,10 @@ const getProductById = async (req, res) => {
   const id = parseInt(req.params.id);
   try {
     const product = fileProds.GetByID(id);
-    if (product === null) return res.status(400).json({ message: 'error producto no encontrado' })
+    if (product?.length < 1 || product == null) return res.status(400).json({ message: 'error producto no encontrado' })
     return res.json({ message: 'success', data: product })
   } catch (err) {
-    return res.status(500).json({ error: err })
+    return res.status(500).json({ error: err }) 
   }
 }
 
@@ -48,12 +49,12 @@ const editProduct = async (req, res) => {
 const addProduct = async (req, res) => {
   if (!admin) return res.status(400).json({ error: 'method availeable only for admins' });
 
-  const { timestamp, nombre, descripcion, codigo, foto, precio, stock } = req.body
+  const { nombre, descripcion, codigo, foto, precio, stock } = req.body
 
-  if (!timestamp || !nombre || !descripcion || !codigo || !foto || !precio || !stock) return res.status(400).json({ error: "all fields required" });
+  if (!nombre || !descripcion || !codigo || !foto || !precio || !stock) return res.status(400).json({ error: "all fields required" });
 
   try {
-    const newProd = { title, price, thumbnail };
+    const newProd = { timestamp: Date.now(), nombre, descripcion, codigo, foto, precio, stock };
     const product = fileProds.save(newProd);
     console.log(product)
     return res.json({ message: 'success', data: product });
@@ -67,7 +68,9 @@ const deleteProduct = async (req, res) => {
   const id = parseInt(req.params.id);
   try {
     const product = fileProds.DeleteByID(id);
+
     if (product === null) return res.status(400).json({ message: 'error producto no encontrado' })
+    if (!product.success) return res.status(400).json({ message: product.message })
     return res.json({ message: 'success', data: { productID: product } })
   } catch (err) {
     return res.status(500).json({ error: err })
