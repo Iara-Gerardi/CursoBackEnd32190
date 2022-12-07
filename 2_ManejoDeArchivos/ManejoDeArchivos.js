@@ -105,6 +105,53 @@ class File {
     }
   }
 
+  // Nested methods (add to, delete from)
+
+  AddTo(ID, obj) {
+    try {
+      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
+      const parsedFile = JSON.parse(readFile)
+      const searchedObj = parsedFile.filter((elem) => { return elem.id === ID });
+
+      let newID = 1
+
+      if (searchedObj.products.length >= 1) return newID = searchedObj.products[searchedObj.products.length - 1].id + 1
+
+      obj = {
+        id: newID,
+        ...obj
+      }
+
+      searchedObj.products.push(obj)
+
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+    } catch (err) {
+      return { error: err }
+    }
+  }
+
+  DeleteFrom(ID, ObjId){
+
+    try {
+      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
+      const parsedFile = JSON.parse(readFile)
+      const searchedObj = parsedFile.filter((elem) => { return elem.id === ID });
+
+      const newArr = searchedObj.products.filter((elem) => { return elem.id !== ObjId });
+
+      const editedObj = {
+        ...searchedObj,
+        products: newArr
+      }
+
+      const newVersion = parsedFile.map(el => el.id == ObjId ? editedObj : el);
+      
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+    } catch (err) {
+      return { error: err }
+    }
+  }
+
 }
 
 const obj = {
