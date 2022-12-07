@@ -9,3 +9,5 @@ cartRouter.delete('/:id', deleteCart);
 cartRouter.get('/:id/productos', getCart);
 cartRouter.post('/:id/productos', addToCart);
 cartRouter.post('/:id/productos/:id_prod', deleteFromCart);
+
+module.exports = cartRouter
