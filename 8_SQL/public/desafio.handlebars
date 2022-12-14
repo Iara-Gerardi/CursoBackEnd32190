@@ -1,0 +1,51 @@
+<div>
+
+    <div class="flex flex-col justify-items-center items-center w-full bg-red-50 gap-12">
+        <h1 class="text-rose-700 font-extrabold text-3xl">Nuevo Producto</h1>
+
+        <form onsubmit="return addProduct(this)" class="flex flex-col gap-2 justify-items-center">
+
+            <div class="flex flex-col gap-2">
+                <label class="text-amber-600 font-bold" for="title"><b>Titulo</b></label>
+                <input id="title" placeholder="Ingrese un titulo" type="text" name="title"
+                    class="rounded-md border-none p-1">
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label class="text-amber-600 font-bold" for="price"><b>Precio</b></label>
+                <input id="price" placeholder="Ingrese un precio" type="text" name="price"
+                    class="rounded-md border-none p-1">
+            </div>
+
+            <button class="rounded-md bg-rose-700 w-16 text-slate-50">Enviar</button>
+        </form>
+    </div>
+
+    <div class="flex flex-col justify-items-center items-center w-full bg-red-50 gap-12">
+        <h1 class="text-rose-700 font-extrabold text-3xl p-3">Productos</h2>
+            <div>
+                <table id="products">
+                    <tr class="grid grid-cols-3 gap-x-12 gap-y-8">
+                        <th>Titulo</th>
+                        <th>Precio</th>
+                        <th>Foto</th>
+                    </tr>
+
+                </table>
+                    {{!-- <div id="products"></div> --}}
+
+            </div>
+    </div>
+
+    <div class="flex flex-col justify-items-center items-center w-full bg-red-50 gap-12 p-4">
+        <h1 class="text-rose-700 font-extrabold text-3xl p-6">Chat</h2>
+
+        <div id="messages">
+        </div>
+        <form class="" onsubmit="return addMessage(this)" autocomplete="off">
+            <input class="rounded-md p-1" type="text" id="username" class="" placeholder="Email" required="true">
+            <input class="rounded-md p-1" type="text" id="text" placeholder="Cuéntanos algo..." required="true">
+            <button class="rounded-md bg-rose-700 w-16 text-slate-50">Enviar</button>
+        </form>
+    </div>
+</div>
