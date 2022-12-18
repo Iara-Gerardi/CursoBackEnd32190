@@ -75,7 +75,7 @@ const deleteFromCart = async (req, res) => {
   try {
     const cart = fileCart.DeleteFrom(id, id_prod);
     if (!cart.success)
-      return res.status(400).json({ message: "error producto no encontrado", ee: cart.ee.products });
+      return res.status(400).json({ message: "error producto no encontrado"});
     return res.json({ message: "success" });
   } catch (err) {
     return res.status(500).json({ error: err });
