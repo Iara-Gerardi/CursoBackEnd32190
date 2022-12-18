@@ -1,4 +1,4 @@
-const options = {
+const MariaDBOptions = {
   client: "mysql",
   connection: {
     host: "127.0.0.1",
@@ -25,3 +25,5 @@ knex.schema
   .finally(() => {
     knex.destroy();
   });
+
+module.exports = { MariaDBOptions };

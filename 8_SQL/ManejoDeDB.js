@@ -1,18 +1,19 @@
 const knex = require("knex");
 
-class ClienteSQL {
+class DBHandler {
   constructor(options, tabla) {
     this.knex = knex(options);
     this.tabla = tabla;
   }
 
-  insertarProductos(productos) {
+  addProduct(product) {
     return this.knex(`${this.tabla}`)
-      .insert(productos)
-      .then(() => console.log("data inserted"))
+      .insert(product)
+      .then(() => {
+        return { status: "success", message: "product added" };
+      })
       .catch((err) => {
-        console.log(err);
-        throw err;
+        return err;
       });
   }
 
@@ -20,13 +21,13 @@ class ClienteSQL {
     let data = null;
     try {
       data = await this.knex(`${this.tabla}`).select("*");
-      return data;
+      return { status: "success", data };
     } catch (err) {
-      console.log("error");
-      return (data = []);
+      return err;
     }
   }
-  getProductByID(id) {
+
+  async getProductByID(id) {
     return this.knex(`${this.tabla}`).select("*").where("id", "=", id);
   }
 
@@ -35,31 +36,34 @@ class ClienteSQL {
       await this.knex(`${this.tabla}`)
         .where("id", "=", id)
         .del()
-        .then(() => console.log("Product deleted"))
+        .then(() => {
+          return { status: "success", message: "product deleted" };
+        })
         .catch((err) => {
-          console.log(err);
           throw err;
         });
-    } catch {
-      throw new Error("ocurrio un error" + err);
+    } catch (err) {
+      return err;
     }
   }
 
-  async updatedProduct(obj) {
+  async updateProduct(obj) {
     try {
       await this.knex
         .from(`${this.tabla}`)
         .where("id", "=", obj.id)
         .update({ nombre: obj.nombre, precio: obj.precio, imagen: obj.imagen })
-        .then(() => console.log("producto actualizado"))
+        .then(() => {
+          return { status: "success", message: "product updated" };
+        })
         .catch((err) => {
           console.log(err);
           throw err;
         });
-    } catch {
-      throw new Error("ocurrio un error" + err);
+    } catch (err) {
+      return err;
     }
   }
 }
 
-module.exports = { ClienteSQL };
+module.exports = { DBHandler };

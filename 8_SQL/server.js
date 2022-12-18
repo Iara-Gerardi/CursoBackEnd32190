@@ -1,27 +1,23 @@
-const express = require('express');
-const { Server: HttpServer } = require('http');
-const { Server: IOServer } = require('socket.io');
+const express = require("express");
+const { Server: HttpServer } = require("http");
+const { Server: IOServer } = require("socket.io");
 
+const { MariaDBOptions } = require("./data/MariaDB");
+const { SQLiteoptions } = require("./data/SQLite");
 // Coloque el 8081 como puerto para poder utilizar la ruta de imagenes del ejercicio 4
 const PORT = 8081;
 const app = express();
-const fs = require("fs");
-const path = require('path');
 const handlebars = require("express-handlebars");
 
 const httpServer = HttpServer(app);
 const io = new IOServer(httpServer);
 
-const classPath = path.join(__dirname, '../' + '/2_ManejoDeArchivos/ManejoDeArchivos.js');
-const { fileClass } = require(classPath);
+const { DBHandler } = require("./ManejoDeDB");
 
-const mensajesPath = path.join(__dirname, '/data/mensajes.json');
-const productosPath = path.join(__dirname, '/data/productos.json');
+const productsClass = new ClienteSQL(MariaDBOptions, "productos");
+const messagesClass = new ClienteSQL(SQLiteoptions, "messages");
 
-const mensajesClass = new fileClass(mensajesPath);
-const productosClass = new fileClass(productosPath);
-
-app.use(express.static('./public'));
+app.use(express.static("./public"));
 
 app.engine(
   "handlebars",
@@ -43,27 +39,48 @@ app.get("/products", async (req, res) => {
   }
 });
 
-io.on('connection', socket => {
+io.on("connection", (Socket) => {
+  productsClass
+    .getAll("productos")
+    .then((products) => Socket.emit("productos", products));
 
-  const mensajes = mensajesClass.GetAll();
-  socket.emit('messages', mensajes);
-  const productos = productosClass.GetAll();
-  socket.emit('products', productos);
+  Socket.on("new-product", (data) => {
+    productsClass
+      .addProduct(data)
+      .then(() => console.log("data inserted"));
+    productsClass.getAll("productos").then((products) => {
+      io.sockets.emit("productos", products);
+    });
+  });
 
-  socket.on('new-message', (data) => {
-    console.log(data)
-    mensajesClass.save(data);
+  Socket.on("deleteProduct", (id) => {
+    productsClass
+      .deleteProduct(id)
+      .then(() => console.log("producto eliminado"));
+    productsClass.getAll("productos").then((products) => {
+      io.sockets.emit("productos", products);
+    });
+  });
 
-    const mensajes = mensajesClass.GetAll();
-    io.sockets.emit('messages', mensajes)
-  })
+  Socket.on("updatedProduct", (data) => {
+    productsClass.updateProduct(data);
+    productsClass.getAll("productos").then((products) => {
+      io.sockets.emit("productos", products);
+    });
+  });
 
-  socket.on('new-product', (data) => {
-    productosClass.save(data);
+  messagesClass
+    .getAll("messages")
+    .then((messages) => Socket.emit("messages", messages));
 
-    const productos = productosClass.GetAll();
-    io.sockets.emit('products', productos);
-  })
-})
+  Socket.on("new-message", (data) => {
+    messagesClass
+      .addProduct(data)
+      .then(() => console.log("data inserted"));
+    messagesClass.getAll("messages").then((messages) => {
+      io.sockets.emit("messages", messages);
+    });
+  });
+});
 
-httpServer.listen(PORT) 
+httpServer.listen(PORT);

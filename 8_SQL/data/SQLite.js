@@ -22,3 +22,5 @@ knex.schema
   .finally(() => {
     knex.destroy();
   });
+
+module.exports = { SQLiteoptions };
