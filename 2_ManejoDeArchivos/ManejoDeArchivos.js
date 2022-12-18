@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require("fs");
 
 class File {
   constructor(fileName) {
@@ -6,104 +6,116 @@ class File {
   }
 
   save(obj) {
-    let newID = 1
+    let newID = 1;
     try {
-      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
-      const parsedFile = JSON.parse(readFile)
+      const readFile = fs.readFileSync(`${this.fileName}`, "utf-8");
+      const parsedFile = JSON.parse(readFile);
 
-      if (parsedFile.length >= 1) newID = parsedFile[parsedFile.length - 1].id + 1
+      if (parsedFile.length >= 1)
+        newID = parsedFile[parsedFile.length - 1].id + 1;
 
       obj = {
         id: newID,
-        ...obj
-      }
+        ...obj,
+      };
 
-      const newVersion = [
-        ...parsedFile,
-        obj
-      ]
+      const newVersion = [...parsedFile, obj];
 
-      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion));
       return newID;
     } catch (err) {
-
       obj = {
         id: newID,
-        ...obj
-      }
+        ...obj,
+      };
 
-      fs.writeFileSync(`${this.fileName}`, JSON.stringify(obj))
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(obj));
       return "Se creo un nuevo archivo con el objeto ingresado";
     }
   }
 
   GetByID(ID) {
-    if (typeof ID != "number") { throw new Error("Ingrese un numero") }
+    if (typeof ID != "number") {
+      throw new Error("Ingrese un numero");
+    }
 
     try {
-      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
-      const parsedFile = JSON.parse(readFile)
-      if (readFile === []) return null
-      const searchedObj = parsedFile.filter((elem) => { return elem.id === ID });
+      const readFile = fs.readFileSync(`${this.fileName}`, "utf-8");
+      const parsedFile = JSON.parse(readFile);
+      if (readFile === []) return null;
+      const searchedObj = parsedFile.filter((elem) => {
+        return elem.id === ID;
+      });
 
-      if (searchedObj.length < 1) { return null; }
+      if (searchedObj.length < 1) {
+        return null;
+      }
       return searchedObj;
-
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
   GetAll() {
     try {
-      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
-      return JSON.parse(readFile)
+      const readFile = fs.readFileSync(`${this.fileName}`, "utf-8");
+      return JSON.parse(readFile);
     } catch (err) {
-      return "No existe un archivo con el nombre buscado"
+      return "No existe un archivo con el nombre buscado";
     }
   }
 
   DeleteByID(ID) {
-    if (typeof ID != "number") { throw new Error("Ingrese un numero") }
+    if (typeof ID != "number") {
+      throw new Error("Ingrese un numero");
+    }
     try {
-      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
-      const parsedFile = JSON.parse(readFile)
-      const newVersion = parsedFile.filter((elem) => { return elem.id !== ID });
-      if (parsedFile.length === newVersion.length) return { success: false, message: "No existe un elemento con ese ID" }
-      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
-      return { success: true, deletedCart: ID }
+      const readFile = fs.readFileSync(`${this.fileName}`, "utf-8");
+      const parsedFile = JSON.parse(readFile);
+      const newVersion = parsedFile.filter((elem) => {
+        return elem.id !== ID;
+      });
+      if (parsedFile.length === newVersion.length)
+        return { success: false, message: "No existe un elemento con ese ID" };
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion));
+      return { success: true, deletedCart: ID };
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
   DeleteAll() {
     try {
-      fs.readFileSync(`${this.fileName}`, 'utf-8')
-      fs.writeFileSync(`${this.fileName}`, "[]")
+      fs.readFileSync(`${this.fileName}`, "utf-8");
+      fs.writeFileSync(`${this.fileName}`, "[]");
     } catch (err) {
-      return "No existe un archivo con el nombre buscado"
+      return "No existe un archivo con el nombre buscado";
     }
   }
 
   EditByID(obj) {
     try {
-      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
-      const parsedFile = JSON.parse(readFile)
+      const readFile = fs.readFileSync(`${this.fileName}`, "utf-8");
+      const parsedFile = JSON.parse(readFile);
 
-      const index = parsedFile.findIndex(el => { return el.id == obj.id })
-      if (index == -1) throw new Error('no existen objectos con el ID ingresado')
+      const index = parsedFile.findIndex((el) => {
+        return el.id == obj.id;
+      });
+      if (index == -1)
+        throw new Error("no existen objectos con el ID ingresado");
       const editedObject = {
         ...parsedFile[index],
         title: obj.title,
         price: obj.price,
-      }
-      const newVersion = parsedFile.map(el => el.id == obj.id ? editedObject : el);
-      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+      };
+      const newVersion = parsedFile.map((el) =>
+        el.id == obj.id ? editedObject : el
+      );
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion));
 
-      return { newData: editedObject }
+      return { newData: editedObject };
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
@@ -111,85 +123,101 @@ class File {
 
   AddTo(ID, obj) {
     try {
-      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
-      const parsedFile = JSON.parse(readFile)
-      const searchedObj = parsedFile.filter((elem) => { return elem.id === ID });
+      const readFile = fs.readFileSync(`${this.fileName}`, "utf-8");
+      const parsedFile = JSON.parse(readFile);
+      const searchedObj = parsedFile.filter((elem) => {
+        return elem.id === ID;
+      });
 
-      let newID = 1
+      let newID = 1;
 
-      if (searchedObj.products.length >= 1) return newID = searchedObj.products[searchedObj.products.length - 1].id + 1
+      if (searchedObj.products.length >= 1)
+        return (newID =
+          searchedObj.products[searchedObj.products.length - 1].id + 1);
 
       obj = {
         id: newID,
-        ...obj
-      }
+        ...obj,
+      };
 
-      searchedObj.products.push(obj)
+      searchedObj.products.push(obj);
 
-      const newVersion = parsedFile.map(el => el.id == ID ? searchedObj : el);
+      const newVersion = parsedFile.map((el) =>
+        el.id == ID ? searchedObj : el
+      );
 
-      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion));
       return editedObj;
     } catch (err) {
-      return { error: err }
+      return { error: err };
     }
   }
 
   DeleteFrom(ID, ObjId) {
-
     try {
-      const readFile = fs.readFileSync(`${this.fileName}`, 'utf-8')
-      const parsedFile = JSON.parse(readFile)
-      const searchedObj = parsedFile.filter((elem) => { return elem.id === ID });
+      const readFile = fs.readFileSync(`${this.fileName}`, "utf-8");
+      const parsedFile = JSON.parse(readFile);
+      const searchedObj = parsedFile.filter((elem) => {
+        return elem.id === ID;
+      });
 
-      const newArr = searchedObj?.products?.filter((elem) => { return elem.id !== ObjId });
+      if (!searchedObj) return { success: false, message: "item not founded" };
+
+      const newArr = searchedObj[0].products?.filter((elem) => {
+        return elem.id !== ObjId;
+      });
+
+      if (!newArr) return { success: false, message: "array not founded" };
 
       const editedObj = {
-        ...searchedObj,
-        products: newArr
-      }
+        id: searchedObj[0].id,
+        timestamp: searchedObj[0].timestamp,
+        products: newArr,
+      };
 
-      const newVersion = parsedFile.map(el => el.id == ObjId ? editedObj : el);
+      const newVersion = parsedFile.map((el) =>
+        el.id === ID ? editedObj : el
+      );
 
-      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion))
+      fs.writeFileSync(`${this.fileName}`, JSON.stringify(newVersion));
       return { success: true };
     } catch (err) {
-      return err
+      return err;
     }
   }
-
 }
 
 const obj = {
-  "title": "Calculadora 2",
-  "price": 134.56,
-  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
-}
+  title: "Calculadora 2",
+  price: 134.56,
+  thumbnail:
+    "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+};
 
 const fileProds = new File("productos.txt");
 
 function pruebas(fileExample) {
   // Traigo el array con todos los objetos y luego solo el objeto con el ID 2.
-  console.log(fileExample.GetAll())
-  console.log(fileExample.GetByID(2))
+  console.log(fileExample.GetAll());
+  console.log(fileExample.GetByID(2));
 
   // Traigo el producto con el ID 4 agrego el objeto y llamo al producto con el ID 4 de nuevo
-  console.log(fileExample.GetByID(4))
-  console.log(fileExample.save(obj))
-  console.log(fileExample.GetByID(4))
+  console.log(fileExample.GetByID(4));
+  console.log(fileExample.save(obj));
+  console.log(fileExample.GetByID(4));
 
   // Elimino el objeto con el ID 2 y llamo al objecto con ese ID para ver si funciono
-  fileExample.DeleteByID(2)
-  console.log(fileExample.GetByID(2))
+  fileExample.DeleteByID(2);
+  console.log(fileExample.GetByID(2));
 
   // Borro todos los objetos y los traigo para mostrar como quedo el archivo
   fileExample.DeleteAll();
-  console.log(fileExample.GetAll())
+  console.log(fileExample.GetAll());
 }
 
 const fakeFile = new File("fake.txt");
 
-// pruebas(fileProds) 
+// pruebas(fileProds)
 // pruebas(fakeFile) //Pruebas con un archivo que no existe
 
 module.exports.fileClass = File;
