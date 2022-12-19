@@ -45,25 +45,7 @@ io.on("connection", (Socket) => {
     .then((products) => Socket.emit("productos", products));
 
   Socket.on("new-product", (data) => {
-    productsClass
-      .addProduct(data)
-      .then(() => console.log("data inserted"));
-    productsClass.getAll("productos").then((products) => {
-      io.sockets.emit("productos", products);
-    });
-  });
-
-  Socket.on("deleteProduct", (id) => {
-    productsClass
-      .deleteProduct(id)
-      .then(() => console.log("producto eliminado"));
-    productsClass.getAll("productos").then((products) => {
-      io.sockets.emit("productos", products);
-    });
-  });
-
-  Socket.on("updatedProduct", (data) => {
-    productsClass.updateProduct(data);
+    productsClass.addData(data).then(() => console.log("data inserted"));
     productsClass.getAll("productos").then((products) => {
       io.sockets.emit("productos", products);
     });
@@ -74,9 +56,7 @@ io.on("connection", (Socket) => {
     .then((messages) => Socket.emit("messages", messages));
 
   Socket.on("new-message", (data) => {
-    messagesClass
-      .addProduct(data)
-      .then(() => console.log("data inserted"));
+    messagesClass.addData(data).then(() => console.log("data inserted"));
     messagesClass.getAll("messages").then((messages) => {
       io.sockets.emit("messages", messages);
     });
