@@ -20,7 +20,7 @@ Agregar 10 documentos con valores distintos a las colecciones de mensajes y prod
   },
   {
     "title": "Limpia vidrios",
-    "price": 4000,
+    "price": 1000,
     "thumbnail": "http://localhost:8080/img/1669216236775-shampoo.jpg"
   },
   {
@@ -111,7 +111,7 @@ Mostrar la cantidad de documentos almacenados en cada una de ellas.
 
 Agregar un producto mas en la coleccion de productos.
 
--db.products.insertOne({
+- db.products.insertOne({
     "title": "Crema hidratante",
     "price": 3480,
     "thumbnail": "http://localhost:8080/img/1669216236775-shampoo.jpg"
@@ -119,18 +119,40 @@ Agregar un producto mas en la coleccion de productos.
 
 Realizar una consulta por nombre del producto especifico.
 
+- db.products.findOne({title: "Shampoo"})
+
   Listar los productos con precio menor a 1000 pesos.
+
+  - db.products.find({price: {$lt: 1000}})
 
   Listar los productos con precio entre 1000 y 3000 pesos.
 
+  - db.products.find({price: {$gte: 1000, $lte: 3000}})
+
   Listar los productos con precio mayor a 3000 pesos.
+
+  - db.products.find({price: {$gt: 3000}})
 
   Realizar una consulta que traiga solo el nombre del tercer producto mas barato.
 
+  - db.products.find().sort({price: 1}).skip(2).limit(1)
+
 Hacer una actualizacion sobre todos los productos agregando el campo stock a todos ellos, con un valor de 100.
+
+- db.products.updateMany({}, {$set: {stock: 100}})
 
 Cambiar el stock a cero de todos los productos con precios mayores a 4000 pesos.
 
+- db.products.updateOne({price:{$gt: 4000}}, {$set: {stock: 0}})
+
 Borrar los productos con precio menor a 1000 pesos.
 
+- db.products.deleteMany({price: {$lt: 1000}})
+
 Crear un usuario (nombre: pepe, clave: asd456) que solo pueda leer la base de datos ecommerce y verificar que no pueda modificarla.
+
+- db.createUser({
+        user: "pepe", 
+        pwd: "asd456", 
+        roles: [{role: "read", db: "ecommerce"}]
+        })
