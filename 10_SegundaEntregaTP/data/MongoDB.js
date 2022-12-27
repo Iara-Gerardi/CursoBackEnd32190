@@ -7,10 +7,10 @@ class File {
     try {
       const document = schema(obj);
       document.save().then((data) => {
-        return { message: 'Object saved successfully', data: data };
+        return data;
       });
     } catch (err) {
-      res.status(400).json({ error: err });
+      throw new Error(err);
     }
   }
 
@@ -19,20 +19,20 @@ class File {
       const data = await schema
         .findOne({ _id: mongoose.Types.ObjectId(ID) })
         .then((data) => {
-          return { message: 'Get method executed successfully', data: data };
+          return data;
         });
     } catch (err) {
-      res.status(400).json({ error: err });
+      throw new Error(err);
     }
   }
 
   async GetAll() {
     try {
       const data = await schema.find().then((data) => {
-        return { message: 'Get method executed successfully', data: data };
+        return data;
       });
     } catch (err) {
-      res.status(400).json({ error: err });
+      throw new Error(err);
     }
   }
 
@@ -41,10 +41,10 @@ class File {
       const data = await schema
         .deleteOne({ _id: mongoose.Types.ObjectId(ID) })
         .then(() => {
-          return { message: `The object with the ID ${ID} has been deleted` };
+          return data;
         });
     } catch (err) {
-      res.status(400).json({ error: err });
+      throw new Error(err);
     }
   }
 
@@ -54,7 +54,7 @@ class File {
         return { message: "All objects were deleted successfully" };
       });
     } catch (err) {
-      res.status(400).json({ error: err });
+      throw new Error(err);
     }
   }
 
@@ -62,11 +62,10 @@ class File {
     try {
       User.findByIdAndUpdate(ID, { obj }, (err, docs) => {
         if (err) throw new Error(err);
-
-        return { message: "Object edited successfully", data: docs };
+        return docs;
       });
     } catch (err) {
-      res.status(400).json({ error: err });
+      throw new Error(err);
     }
   }
 
@@ -75,14 +74,14 @@ class File {
   async AddTo(ID, obj) {
     try {
     } catch (err) {
-      res.status(400).json({ error: err });
+      throw new Error(err);
     }
   }
 
   async DeleteFrom(ID, ObjId) {
     try {
     } catch (err) {
-      res.status(400).json({ error: err });
+      throw new Error(err);
     }
   }
 }

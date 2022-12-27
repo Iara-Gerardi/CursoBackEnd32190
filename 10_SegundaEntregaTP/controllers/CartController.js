@@ -1,15 +1,14 @@
 const express = require("express");
-
-const admin = true;
-
 const { MongoDBClass } = require("../data/MongoDB");
-const cart = new MongoDBClass();
+const cartSchema = require("../data/models/cartModel");
+
+const cart = new MongoDBClass(cartSchema);
 
 const createCart = async (req, res) => {
   try {
     const data = cart.Save({ timestamp: Date.now(), products: [] });
 
-    return res.json({ message: "success", data: data });
+    return res.json({ message: "Cart added successfully", data: data });
   } catch (err) {
     return res.status(500).json({ error: err });
   }
@@ -17,35 +16,30 @@ const createCart = async (req, res) => {
 
 const getCart = async (req, res) => {
   try {
-  
+    
   } catch (err) {
+    return res.status(500).json({ error: err });
   }
 };
 
 const deleteCart = async (req, res) => {
- 
   try {
-    
   } catch (err) {
-  
+    return res.status(500).json({ error: err });
   }
 };
 
 const addToCart = async (req, res) => {
- 
   try {
-   
   } catch (err) {
-   
+    return res.status(500).json({ error: err });
   }
 };
 
 const deleteFromCart = async (req, res) => {
-
   try {
-   
   } catch (err) {
-   
+    return res.status(500).json({ error: err });
   }
 };
 
