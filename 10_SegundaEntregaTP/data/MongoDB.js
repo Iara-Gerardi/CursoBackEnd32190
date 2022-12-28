@@ -69,19 +69,4 @@ class File {
     }
   }
 
-  // Nested methods
-
-  async AddTo(ID, obj) {
-    try {
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-
-  async DeleteFrom(ID, ObjId) {
-    try {
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
 }
