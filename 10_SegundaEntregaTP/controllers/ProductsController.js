@@ -1,10 +1,10 @@
 const express = require("express");
-const { MongoDBClass } = require("../data/MongoDB");
+const MongoDB = require("../data/MongoDB");
 const productSchema = require("../data/models/productsModel");
 
 const admin = true;
 
-const products = new MongoDBClass(productSchema);
+const products = new MongoDB(productSchema)
 
 const getProducts = async (req, res) => {
   try {

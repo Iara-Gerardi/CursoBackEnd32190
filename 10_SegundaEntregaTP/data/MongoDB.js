@@ -1,4 +1,4 @@
-class File {
+class MongoDB {
   constructor(schema) {
     this.schema = schema;
   }
@@ -70,3 +70,5 @@ class File {
   }
 
 }
+
+module.exports = MongoDB

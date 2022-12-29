@@ -1,8 +1,7 @@
 const express = require("express");
-const { MongoDBClass } = require("../data/MongoDB");
-const cartSchema = require("../data/models/cartModel");
+const Firebase = require("../data/Firebase");
 
-const cart = new MongoDBClass(cartSchema);
+const cart = new Firebase('carts')
 
 const createCart = async (req, res) => {
   try {

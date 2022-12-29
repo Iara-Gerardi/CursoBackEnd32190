@@ -1,6 +1,8 @@
-class File {
+const db = require('./firebaseConfig');
+
+class Firebase {
   constructor(collection) {
-    this.collection = collection;
+    this.collection = db.collection(collection);
   }
 
   async Save(obj) {
@@ -78,3 +80,5 @@ class File {
     }
   }
 }
+
+module.exports = Firebase
