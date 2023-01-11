@@ -12,6 +12,7 @@ const io = new IOServer(httpServer);
 const MongoDB = require("./data/MongoDB");
 const messageSchema = require("./data/models/messageModel");
 const productSchema = require("./data/models/productsModel");
+const { fakeProds } = require("./data/fakeProds");
 
 const messagesClass = new MongoDB(messageSchema);
 const productsClass = new MongoDB(productSchema);
@@ -45,6 +46,14 @@ app.get("/products", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+app.get("/api/productos-test", (req, res) => {
+  let fakeProdArr = [];
+  for (let i = 0; i < 5; i++) {
+    fakeProdArr.push(fakeProds());
+  }
+  res.json({ data: fakeProdArr });
 });
 
 io.on("connection", (Socket) => {
